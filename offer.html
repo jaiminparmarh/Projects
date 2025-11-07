@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manage Trending Offers</title>
+
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right top, #b6d4c5, #f7f0e5, #58554e);
+        color: #333;
+        padding: 20px;
+    }
+    h1, h2 {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: #2c3e50;
+    }
+    .container {
+        max-width: 800px;
+        margin: auto;
+        background: #dad9d7ff;
+        padding: 20px 25px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    }
+    form {
+        background: #fafafa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+    }
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+    }
+    input[type=text], textarea {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        border: 1.8px solid #ccd7e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input:focus, textarea:focus {
+        border-color: #2673f2;
+        outline: none;
+        box-shadow: 0 0 8px rgba(38,115,242,0.2);
+    }
+    button {
+        background: linear-gradient(90deg, #ff6ec4, #7873f5);
+        border: none;
+        color: #fff;
+        padding: 12px 26px;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    .cancel-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        margin-left: 10px;
+        background: #ccc;
+        color: #333;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+    .cancel-btn:hover {
+        background: #999;
+        color: #fff;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    thead th {
+        background: #2673f2;
+        color: #fff;
+        padding: 12px;
+        text-align: left;
+        font-size: 0.95rem;
+        border-radius: 8px 8px 0 0;
+    }
+    tbody tr {
+        border-bottom: 1px solid #e5e9f0;
+        transition: box-shadow 0.3s ease;
+    }
+    tbody tr:nth-child(even) {
+        background: #f9fbff;
+    }
+    tbody tr:hover {
+        background: #eef3ff;
+    }
+    tbody td {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+    tbody td:first-child {
+        font-weight: bold;
+        color: #2673f2;
+    }
+    tbody td:last-child a {
+        text-decoration: none;
+        color: #2673f2;
+        margin-right: 12px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+    tbody td:last-child a:hover {
+        color: #ff6ec4;
+    }
+
+    @media (max-width: 640px) {
+        table, thead, tbody, th, td, tr { display: block; }
+        thead tr { display: none; }
+        tbody tr {
+            background: #fff;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 10px;
+        }
+        tbody td {
+            padding-left: 45%;
+            position: relative;
+        }
+        tbody td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2673f2;
+            font-weight: bold;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Manage Trending Offers</h1>
+
+    <!-- Static Add New Offer Form -->
+    <h2>Add New Offer</h2>
+    <form onsubmit="alert('This is a static page. Backend functionality is not available.'); return false;" novalidate>
+        <label for="title">Title:</label>
+        <input id="title" name="title" type="text" required placeholder="Offer title..." />
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="3" required placeholder="Offer description..."></textarea>
+
+        <center>
+            <button type="submit" name="add">Add Offer</button>
+                <button type="button" onclick="window.location.href='Client_portal.html'">Preview</button>
+                <button type="button" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+        </center>
+    </form>
+
+    <!-- Static Existing Offers Table with sample data -->
+    <h2>Existing Offers (Total: 3)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="No.">1</td>
+                <td data-label="Title">Spring Sale</td>
+                <td data-label="Description">Get 20% off on all items this spring season.</td>
+                <td data-label="Actions">
+                    <a href="#" onclick="alert('Edit is not functional in static version'); return false;">Edit</a>
+                    <a href="#" onclick="alert('Delete is not functional in static version'); return false;">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="No.">2</td>
+                <td data-label="Title">Free Shipping</td>
+                <td data-label="Description">Enjoy free shipping on orders over $50.</td>
+                <td data-label="Actions">
+                    <a href="#" onclick="alert('Edit is not functional in static version'); return false;">Edit</a>
+                    <a href="#" onclick="alert('Delete is not functional in static version'); return false;">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="No.">3</td>
+                <td data-label="Title">Buy 1 Get 1</td>
+                <td data-label="Description">Special buy one get one free offer on selected products.</td>
+                <td data-label="Actions">
+                    <a href="#" onclick="alert('Edit is not functional in static version'); return false;">Edit</a>
+                    <a href="#" onclick="alert('Delete is not functional in static version'); return false;">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
