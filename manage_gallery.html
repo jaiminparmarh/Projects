@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manage Gallery - Upload Photos & Videos</title>
+
+<!-- Organized CSS -->
+<style>
+/* ====== Base Styles ====== */
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: linear-gradient(to right top, #b6d4c5, #f7f0e5, #58554e);
+    color: #333;
+    line-height: 1.6;
+}
+.container {
+    max-width: 900px;
+    margin: 1rem auto 3rem;
+    background: #dad9d7ff;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgb(0 0 0 / 0.1);
+}
+/* ====== Headings ====== */
+h1 {
+    text-align: center;
+    color: #4a4a4a;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+h2 {
+    margin-top: 2rem;
+}
+/* ====== Form Styles ====== */
+form {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    background: #fafafa;
+    padding: 1.8rem 2rem;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 0.05);
+    transition: box-shadow 0.3s ease;
+}
+form:hover, form:focus-within {
+    box-shadow: 0 0 15px rgb(38 115 242 / 0.25);
+}
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2e2e2e;
+}
+input[type=text], select, input[type=file] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 1.2rem;
+    border: 1.8px solid #ccd7e0;
+    border-radius: 7px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+input[type=text]:focus, select:focus, input[type=file]:focus {
+    border-color: #2673f2;
+    outline: none;
+}
+button {
+    background: linear-gradient(90deg, #ff6ec4, #7873f5);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+button:hover {
+    background: linear-gradient(90deg, #ff85d0, #9890f6);
+    transform: scale(1.05);
+}
+/* ====== Table Styles ====== */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+thead tr th {
+    background: #2673f2;
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 18px;
+    text-align: left;
+    border-radius: 8px 8px 0 0;
+}
+tbody tr {
+    background: #fff0f6;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08);
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+tbody tr:hover {
+    box-shadow: 0 7px 15px rgb(38 115 242 / 0.3);
+}
+tbody tr td {
+    padding: 12px 18px;
+    vertical-align: middle;
+}
+tbody tr td:first-child {
+    width: 50px;
+    font-weight: bold;
+    color: #2673f2;
+}
+tbody tr td:last-child {
+    width: 150px;
+}
+tbody tr td a {
+    display: inline-block;
+    margin-right: 12px;
+    color: #2673f2;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+tbody tr td a:hover {
+    color: #ff6ec4;
+}
+/* ====== Preview Thumbnails ====== */
+.thumbnail, video.thumbnail-video {
+    max-width: 260px;
+    max-height: 190px;
+    border-radius: 12px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.thumbnail:hover, video.thumbnail-video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(111, 66, 193, 0.6);
+}
+/* Animation defaults */
+.animate-item {
+    opacity: 0;
+    transition: all 1s ease-out;
+}
+.animate-up { transform: translateY(30px); }
+.animate-left { transform: translateX(30px); }
+.animate-right { transform: translateX(-30px); }
+.animate-zoom { transform: scale(0.8); }
+/* When in view */
+.animate-item.animate {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+}
+</style>
+
+<script>
+function toggleInputFields() {
+    var type = document.getElementById('mediaType').value;
+    document.getElementById('photoInput').style.display = (type === 'photo') ? 'block' : 'none';
+    document.getElementById('photoFile').required = (type === 'photo');
+    document.getElementById('videoInput').style.display = (type === 'video') ? 'block' : 'none';
+    document.getElementById('videoFile').required = (type === 'video');
+}
+window.onload = toggleInputFields;
+</script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="animate-item animate-zoom">Manage Gallery - Upload Photos & Videos</h1>
+
+    <!-- Upload Form -->
+    <form class="animate-item animate-zoom" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" required />
+
+        <label for="mediaType">Media Type</label>
+        <select id="mediaType" name="mediaType" onchange="toggleInputFields()" required>
+            <option value="photo">Photo</option>
+            <option value="video">Video</option>
+        </select>
+
+        <div id="photoInput">
+            <label for="photoFile">Upload Photo</label>
+            <input id="photoFile" name="photoFile" type="file" accept="image/*" />
+        </div>
+
+        <div id="videoInput" style="display:none;">
+            <label for="videoFile">Upload Video</label>
+            <input id="videoFile" name="videoFile" type="file" accept="video/*" />
+        </div>
+
+        <center>
+            <button class="animate-item animate-right" type="submit" name="add">Add Item</button>
+            <button class="animate-item animate-up" type="button" onclick="window.location.href='gallary.html'">Preview</button>
+            <button class="animate-item animate-left" type="button" onclick="window.location.href='dashboard.html'">Back</button>
+        </center>
+    </form>
+
+    <!-- Gallery Items Table -->
+    <h2 class="animate-item animate-zoom">Existing Items (Total: 3)</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Preview</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animate-item animate-up">
+                <td>1</td>
+                <td>Sample Photo One</td>
+                <td>Photo</td>
+                <td><img src="uploads/photos/sample1.jpg" alt="Sample Photo One" class="thumbnail" /></td>
+                <td><a href="#" onclick="alert('Delete unavailable in static version'); return false;">Delete</a></td>
+            </tr>
+            <tr class="animate-item animate-up">
+                <td>2</td>
+                <td>Sample Video One</td>
+                <td>Video</td>
+                <td>
+                    <video class="thumbnail-video" controls>
+                        <source src="uploads/videos/sample1.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </td>
+                <td><a href="#" onclick="alert('Delete unavailable in static version'); return false;">Delete</a></td>
+            </tr>
+            <tr class="animate-item animate-up">
+                <td>3</td>
+                <td>Sample Photo Two</td>
+                <td>Photo</td>
+                <td><img src="uploads/photos/sample2.jpg" alt="Sample Photo Two" class="thumbnail" /></td>
+                <td><a href="#" onclick="alert('Delete unavailable in static version'); return false;">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Animate on scroll
+    const animateItems = document.querySelectorAll('.animate-item');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('animate');
+      });
+    }, { threshold: 0.2 });
+    animateItems.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
